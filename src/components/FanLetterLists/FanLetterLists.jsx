@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import AddForm from 'components/AddForm/AddForm';
 import Fanletter from 'components/Fanletter/Fanletter';
 import fakeData from 'assets/fakeData.json';
 import { useNavigate } from 'react-router-dom';
 import 'reset.css';
 import styled from 'styled-components';
+import { FanPageContext } from 'context/FanPageContext';
+import { FanLetterContext } from 'context/FanLetterContext';
 
 const LetterList = styled.div`
   background-color: #8dd2ef;
@@ -16,10 +18,12 @@ const LetterList = styled.div`
   padding: 1rem;
 `;
 
-function FanLetterLists({ filter }) {
+function FanLetterLists() {
   // useEffect(() => {
   //   localStorage.clear();
   // }, []);
+
+  const { filter } = useContext(FanPageContext);
 
   const [letters, setLetters] = useState(() => {
     const storedData =
@@ -56,27 +60,33 @@ function FanLetterLists({ filter }) {
   }, []);
 
   return (
-    <section>
-      <AddForm onAdd={handleAdd} />
-      <LetterList>
-        {filtered.length === 0 ? (
-          <p>
-            {filter}에게 남겨진 팬레터가 없습니다. 첫 번째 팬레터의 주인공이
-            되세요!🐇
-          </p>
-        ) : (
-          filtered.map((item) => (
-            <Fanletter
-              key={item.id}
-              letter={item}
-              onUpdate={handleUpdate}
-              status={item.status}
-              onClick={() => handleDetail(item)}
-            />
-          ))
-        )}
-      </LetterList>
-    </section>
+    <FanLetterContext.Provider
+      value={{
+        onAdd: handleAdd,
+      }}
+    >
+      <section>
+        <AddForm />
+        <LetterList>
+          {filtered.length === 0 ? (
+            <p>
+              {filter}에게 남겨진 팬레터가 없습니다. 첫 번째 팬레터의 주인공이
+              되세요!🐇
+            </p>
+          ) : (
+            filtered.map((item) => (
+              <Fanletter
+                key={item.id}
+                letter={item}
+                onUpdate={handleUpdate}
+                status={item.status}
+                onClick={() => handleDetail(item)}
+              />
+            ))
+          )}
+        </LetterList>
+      </section>
+    </FanLetterContext.Provider>
   );
 }
 

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useContext } from 'react';
 import 'reset.css';
 import styled from 'styled-components';
+import { FanPageContext } from 'context/FanPageContext';
 
 const HeaderTitle = styled.h1`
   display: flex;
@@ -41,7 +43,8 @@ const FilterItem = styled.li`
   }
 `;
 
-function Header({ filters, filter, onFilterChange }) {
+function Header() {
+  const { filters, filter, onFilterChange } = useContext(FanPageContext);
   return (
     <>
       <HeaderTitle>뉴진스 팬레터 콜렉션</HeaderTitle>

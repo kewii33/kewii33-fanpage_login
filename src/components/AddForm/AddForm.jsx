@@ -1,8 +1,9 @@
 import React from 'react';
 import 'reset.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
+import { FanLetterContext } from 'context/FanLetterContext';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -76,7 +77,9 @@ const SelectContent = styled.select`
   margin-left: 0.5rem;
 `;
 
-function AddForm({ onAdd }) {
+function AddForm() {
+  const { onAdd } = useContext(FanLetterContext);
+
   const maxNameLength = 20;
   const maxContentLength = 100;
 

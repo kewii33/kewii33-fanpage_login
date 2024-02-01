@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Header from 'components/Header/Header';
 import FanLetterLists from 'components/FanLetterLists/FanLetterLists';
 import styled from 'styled-components';
+import { FanPageContext } from 'context/FanPageContext';
 
 const filters = ['혜인', '민지', '해린', '다니엘', '하니'];
 
@@ -39,16 +40,20 @@ function Home() {
   };
 
   return (
-    <Main>
-      <div className="App">
-        <Header
-          filters={filters}
-          filter={filter}
-          onFilterChange={handleFilterChange}
-        />
-        <FanLetterLists filter={filter} />
-      </div>
-    </Main>
+    <FanPageContext.Provider
+      value={{
+        filters,
+        filter,
+        onFilterChange: handleFilterChange,
+      }}
+    >
+      <Main>
+        <div className="App">
+          <Header />
+          <FanLetterLists />
+        </div>
+      </Main>
+    </FanPageContext.Provider>
   );
 }
 
