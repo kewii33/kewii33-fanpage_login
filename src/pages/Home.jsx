@@ -1,9 +1,8 @@
 import 'reset.css';
-import { useEffect, useState } from 'react';
-import Header from 'components/Header/Header';
-import FanLetterLists from 'components/FanLetterLists/FanLetterLists';
+import { useSelector } from 'react-redux';
+import Header from 'components/Header';
+import FanLetterLists from 'components/FanLetterLists';
 import styled from 'styled-components';
-import { FanPageContext } from 'context/FanPageContext';
 
 const filters = ['혜인', '민지', '해린', '다니엘', '하니'];
 
@@ -21,39 +20,16 @@ const Main = styled.div`
 `;
 
 function Home() {
-  const [filter, setFilter] = useState(() => {
-    const storedFilter = localStorage.getItem('selectedFilter');
-    return storedFilter && filters.includes(storedFilter)
-      ? storedFilter
-      : filters[0];
-  });
-
-  useEffect(() => {
-    if (!filters.includes(filter)) {
-      setFilter(filters[0]);
-    }
-    localStorage.setItem('selectedFilter', filter);
-  }, [filter]);
-
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
-  };
+  const filters = useSelector((state) => state.filter);
+  const filter = useSelector((state) => state.filter);
 
   return (
-    <FanPageContext.Provider
-      value={{
-        filters,
-        filter,
-        onFilterChange: handleFilterChange,
-      }}
-    >
-      <Main>
-        <div className="App">
-          <Header />
-          <FanLetterLists />
-        </div>
-      </Main>
-    </FanPageContext.Provider>
+    <Main>
+      <div className="App">
+        <Header />
+        <FanLetterLists />
+      </div>
+    </Main>
   );
 }
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useContext } from 'react';
 import 'reset.css';
 import styled from 'styled-components';
-import { FanPageContext } from 'context/FanPageContext';
+import { setFilter } from '../redux/config/filters';
+import { useDispatch, useSelector } from 'react-redux';
 
 const HeaderTitle = styled.h1`
   display: flex;
@@ -39,12 +39,19 @@ const FilterItem = styled.li`
   background-color: ${(props) => (props.isSelected ? '#edc5ff' : '#ffffff')};
   &:hover {
     cursor: pointer;
-    background-color: #edc5ff;
+    background-color: ${(props) => (props.isSelected ? '#edc5ff' : '#edc5ff')};
   }
 `;
 
 function Header() {
-  const { filters, filter, onFilterChange } = useContext(FanPageContext);
+  const filters = useSelector((state) => state.filters.filterList);
+  const selectedFilter = useSelector((state) => state.filters.selectedFilter);
+
+  const dispatch = useDispatch();
+  const handleFilterChange = (newFilter) => {
+    dispatch(setFilter(newFilter));
+  };
+
   return (
     <>
       <HeaderTitle>뉴진스 팬레터 콜렉션</HeaderTitle>
@@ -52,9 +59,9 @@ function Header() {
         {filters.map((value, index) => (
           <FilterItem
             key={index}
-            isSelected={filter === value}
+            isSelected={selectedFilter === value}
             onClick={() => {
-              onFilterChange(value);
+              handleFilterChange(value);
             }}
           >
             {value}

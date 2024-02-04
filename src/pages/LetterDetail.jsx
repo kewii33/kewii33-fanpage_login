@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { editLetter, deleteLetter } from '../redux/config/letters';
 import 'reset.css';
 import styled from 'styled-components';
 
@@ -123,15 +125,18 @@ const DetailButtons = styled.div`
 `;
 
 function LetterDetail() {
+  const dispatch = useDispatch();
+  const letters = useSelector((state) => state.letters.letters);
+
   const { letterId } = useParams();
   const [letter, setLetter] = useState(null);
   const [editedContent, setEditedContent] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [originalContent, setOriginContent] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('fanletters')) || [];
-    const selectedLetter = storedData.find((letter) => letter.id === letterId);
+    const selectedLetter = letters.find((letter) => letter.id === letterId);
 
     if (selectedLetter) {
       setLetter(selectedLetter);
@@ -139,17 +144,7 @@ function LetterDetail() {
     } else {
       console.log('팬레터 정보가 없습니다.');
     }
-  }, [letterId]);
-
-  useEffect(() => {
-    if (editedContent !== '') {
-      const storedData = JSON.parse(localStorage.getItem('fanletters')) || [];
-      const updatedData = storedData.map((item) =>
-        item.id === letterId ? { ...item, content: editedContent } : item
-      );
-      localStorage.setItem('fanletters', JSON.stringify(updatedData));
-    }
-  }, [editedContent, letterId]);
+  }, [letterId, letters]);
 
   if (!letter) {
     return <div>Loading...</div>;
@@ -168,34 +163,25 @@ function LetterDetail() {
 
   const handleDelete = () => {
     const confirmDelete = window.confirm('정말로 삭제하시겠습니까?');
-
     if (confirmDelete) {
-      const storedData = JSON.parse(localStorage.getItem('fanletters')) || [];
-      const updatedData = storedData.filter((letter) => letter.id !== letterId);
-      localStorage.setItem('fanletters', JSON.stringify(updatedData));
-
+      dispatch(deleteLetter(letterId));
       navigate('/');
     }
   };
 
   const enterEditMode = () => {
     setEditMode(true);
+    setOriginContent(editedContent);
   };
 
   const handleEdit = () => {
-    if (editedContent === content) {
+    if (editedContent === originalContent) {
       alert('수정된 부분이 없습니다.');
       return;
     }
-
     const confirmEdit = window.confirm('이대로 수정하시겠습니까?');
     if (confirmEdit) {
-      const storedData = JSON.parse(localStorage.getItem('fanletters')) || [];
-      const updatedData = storedData.map((item) =>
-        item.id === letterId ? { ...item, content: editedContent } : item
-      );
-
-      localStorage.setItem('fanletters', JSON.stringify(updatedData));
+      dispatch(editLetter(letterId, editedContent));
       setEditMode(false);
     }
   };
@@ -204,7 +190,7 @@ function LetterDetail() {
 
   const handleCancel = () => {
     setEditMode(false);
-    setEditedContent(content);
+    setEditedContent(originalContent);
   };
 
   return (

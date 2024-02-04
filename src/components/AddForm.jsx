@@ -1,9 +1,10 @@
 import React from 'react';
 import 'reset.css';
-import { useState, useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { FanLetterContext } from 'context/FanLetterContext';
+import { addLetter } from '../redux/config/letters';
 
 const InputContainer = styled.div`
   width: 100%;
@@ -78,7 +79,7 @@ const SelectContent = styled.select`
 `;
 
 function AddForm() {
-  const { onAdd } = useContext(FanLetterContext);
+  const dispatch = useDispatch();
 
   const maxNameLength = 20;
   const maxContentLength = 100;
@@ -158,13 +159,7 @@ function AddForm() {
       formattedTime,
     };
 
-    const storedData = JSON.parse(localStorage.getItem('fanletters')) || [];
-
-    const updatedData = [...storedData, newLetter];
-
-    localStorage.setItem('fanletters', JSON.stringify(updatedData));
-
-    onAdd(newLetter);
+    dispatch(addLetter(newLetter));
 
     setUserName('');
     setContent('');
