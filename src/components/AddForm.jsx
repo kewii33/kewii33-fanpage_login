@@ -133,23 +133,14 @@ function AddForm() {
       return;
     }
 
-    const timeStamp = new Date().getTime();
-    const date = new Date(timeStamp);
-
-    const year = String(date.getFullYear()).slice(-2);
-    const month = date.getMonth() + 1;
-    const formattedMonth = month < 10 ? `0${month}` : month;
-    const day = date.getDate();
-    const formattedDay = day < 10 ? `0${day}` : day;
-    const hours = date.getHours();
-    const formattedHours = hours < 10 ? `0${hours}` : hours;
-    const minutes = date.getMinutes();
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const seconds = date.getSeconds();
-    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-    const ampm = hours >= 12 ? '오후' : '오전';
-
-    const formattedTime = `${year}. ${formattedMonth}. ${formattedDay}. ${ampm} ${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    const formattedTime = new Date().toLocaleDateString('ko', {
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
     const newLetter = {
       id: uuidv4(),

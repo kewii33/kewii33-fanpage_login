@@ -4,8 +4,6 @@ import Header from 'components/Header';
 import FanLetterLists from 'components/FanLetterLists';
 import styled from 'styled-components';
 
-const filters = ['혜인', '민지', '해린', '다니엘', '하니'];
-
 const Main = styled.div`
   width: 100vw;
   height: 102vh;
@@ -20,8 +18,7 @@ const Main = styled.div`
 `;
 
 function Home() {
-  const filters = useSelector((state) => state.filter);
-  const filter = useSelector((state) => state.filter);
+  useSelector((state) => state.filter);
 
   return (
     <Main>

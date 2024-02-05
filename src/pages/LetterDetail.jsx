@@ -150,7 +150,7 @@ function LetterDetail() {
     return <div>Loading...</div>;
   }
 
-  const { avatar, userName, formattedTime, status, content } = letter;
+  const { avatar, userName, formattedTime, status } = letter;
 
   const hasAvatar = !!avatar;
   const defaultAvatarURL =
