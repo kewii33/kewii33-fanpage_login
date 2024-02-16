@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import 'reset.css';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from '../redux/config/filters';
-import { updateLetter } from '../redux/config/letters';
+import { updateLetter } from 'store/modules/letters';
 
 const LetterList = styled.div`
   background-color: #8dd2ef;
@@ -22,7 +21,9 @@ const LetterList = styled.div`
 function FanLetterLists() {
   const dispatch = useDispatch();
   const letters = useSelector((state) => state.letters.letters);
-  const filter = useSelector((state) => state.letters.filter);
+  const filter = useSelector((state) => {
+    return state.filters.selectedFilter;
+  });
 
   const handleUpdate = (updated) => {
     dispatch(updateLetter(updated));
@@ -37,7 +38,6 @@ function FanLetterLists() {
   };
 
   useEffect(() => {
-    dispatch(setFilter('혜인'));
     const storedData = JSON.parse(localStorage.getItem('fanletters'));
     if (!storedData || storedData.length === 0) {
       localStorage.setItem('fanletters', JSON.stringify(fakeData));

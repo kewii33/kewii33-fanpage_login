@@ -1,7 +1,7 @@
 import React from 'react';
 import 'reset.css';
 import styled from 'styled-components';
-import { setFilter } from '../redux/config/filters';
+import { setFilter } from 'store/modules/filters';
 import { useDispatch, useSelector } from 'react-redux';
 
 const HeaderTitle = styled.h1`
@@ -36,10 +36,13 @@ const FilterItem = styled.li`
   font-size: 1.4rem;
   border: 0.1px solid white;
   border-radius: 0.3rem;
-  background-color: ${(props) => (props.isSelected ? '#edc5ff' : '#ffffff')};
+  background-color: #ffffff;
+  &.selected {
+    background-color: #edc5ff;
+  }
   &:hover {
     cursor: pointer;
-    background-color: ${(props) => (props.isSelected ? '#edc5ff' : '#edc5ff')};
+    background-color: #edc5ff;
   }
 `;
 
@@ -59,7 +62,7 @@ function Header() {
         {filters.map((value, index) => (
           <FilterItem
             key={index}
-            isSelected={selectedFilter === value}
+            className={selectedFilter === value ? 'selected' : ''}
             onClick={() => {
               handleFilterChange(value);
             }}

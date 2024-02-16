@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { editLetter, deleteLetter } from '../redux/config/letters';
+import { editLetter, deleteLetter } from '../store/modules/letters';
 import 'reset.css';
 import styled from 'styled-components';
 
