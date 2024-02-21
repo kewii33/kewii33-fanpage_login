@@ -1,5 +1,86 @@
 import 'reset.css';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+function Fanletter({ letter, onClick }) {
+  const { nickname: authorNickname, content, formattedTime, avatar } = letter;
+  const [nickname, setNickname] = useState('');
+  const hasAvatar = !!avatar;
+  const defaultAvatarURL =
+    'https://i.pinimg.com/originals/1a/2a/39/1a2a39f46908773b0c6b6acd74b57d1f.jpg';
+  const avatarURL = hasAvatar ? avatar : defaultAvatarURL;
+  const [profilePic, setProfilePic] = useState('');
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    const getNickname = async () => {
+      try {
+        if (accessToken) {
+          const response = await axios.get('/user', {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+          });
+          console.log('response:', response);
+          setNickname(response.data.nickname);
+        }
+      } catch (error) {
+        console.log('닉네임 불러오기 실패:', error);
+      }
+    };
+
+    getNickname();
+
+    const getProfilePic = async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      try {
+        const response = await axios.get('/user', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        console.log('response:', response);
+        setProfilePic({
+          id: response.data.id,
+          nickname: response.data.nickname,
+          avatar: response.data.avatar || '',
+        });
+      } catch (error) {
+        console.error('프로필 정보 가져오기 실패:', error);
+      }
+    };
+    if (accessToken) {
+      getProfilePic();
+      if (nickname !== authorNickname) {
+        getProfilePic();
+      }
+    }
+  }, []);
+
+  return (
+    <LetterCard onClick={() => onClick(letter.id)}>
+      <ProfilePic
+        src={
+          nickname === authorNickname
+            ? profilePic.avatar || defaultAvatarURL
+            : defaultAvatarURL
+        }
+        alt="avatar"
+      ></ProfilePic>
+      <LetterCardContent>
+        <ContentElement className="nickname">{authorNickname}</ContentElement>
+        <ContentElement className="time">{formattedTime}</ContentElement>
+        <ContentElementPreview className="content">
+          {content}
+        </ContentElementPreview>
+      </LetterCardContent>
+    </LetterCard>
+  );
+}
 
 const LetterCard = styled.div`
   margin: 0.6rem;
@@ -41,26 +122,5 @@ const ContentElementPreview = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
-function Fanletter({ letter, onClick }) {
-  const { userName, content, formattedTime, avatar } = letter;
-  const hasAvatar = !!avatar;
-  const defaultAvatarURL =
-    'https://i.pinimg.com/originals/1a/2a/39/1a2a39f46908773b0c6b6acd74b57d1f.jpg';
-  const avatarURL = hasAvatar ? avatar : defaultAvatarURL;
-
-  return (
-    <LetterCard onClick={() => onClick(letter.id)}>
-      <ProfilePic src={avatarURL} alt="avatar"></ProfilePic>
-      <LetterCardContent>
-        <ContentElement className="userName">{userName}</ContentElement>
-        <ContentElement className="time">{formattedTime}</ContentElement>
-        <ContentElementPreview className="content">
-          {content}
-        </ContentElementPreview>
-      </LetterCardContent>
-    </LetterCard>
-  );
-}
 
 export default Fanletter;

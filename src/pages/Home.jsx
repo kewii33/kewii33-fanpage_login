@@ -3,10 +3,11 @@ import { useSelector } from 'react-redux';
 import Header from 'components/Header';
 import FanLetterLists from 'components/FanLetterLists';
 import styled from 'styled-components';
+import Navbar from 'components/Navbar';
 
 const Main = styled.div`
-  width: 100vw;
-  height: 102vh;
+  width: auto;
+  height: auto;
   display: flex;
   justify-content: center;
   background: rgb(141, 210, 239);
@@ -21,12 +22,15 @@ function Home() {
   useSelector((state) => state.filter);
 
   return (
-    <Main>
-      <div className="App">
-        <Header />
-        <FanLetterLists />
-      </div>
-    </Main>
+    <>
+      <Navbar />
+      <Main>
+        <div className="App">
+          <Header />
+          <FanLetterLists />
+        </div>
+      </Main>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import AddForm from 'components/AddForm';
 import Fanletter from 'components/Fanletter';
-import fakeData from 'assets/fakeData.json';
+import db from '../db.json';
 import { useNavigate } from 'react-router-dom';
 import 'reset.css';
 import styled from 'styled-components';
@@ -40,7 +40,7 @@ function FanLetterLists() {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('fanletters'));
     if (!storedData || storedData.length === 0) {
-      localStorage.setItem('fanletters', JSON.stringify(fakeData));
+      localStorage.setItem('fanletters', JSON.stringify(db));
     }
   }, [dispatch]);
 
