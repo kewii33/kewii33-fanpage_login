@@ -64,7 +64,6 @@ const authSlice = createSlice({
   },
 });
 
-// selectUserId 선택기 추가
 export const selectUserId = (state) => state.auth?.userData?.id;
 
 export const { login, logout } = authSlice.actions;
