@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-import { addLetter } from 'store/modules/letters';
+import { addLetter } from 'store/modules/letterSlice';
 import axios from 'axios';
 
 function AddForm() {

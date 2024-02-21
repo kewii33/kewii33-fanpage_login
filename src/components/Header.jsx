@@ -1,7 +1,7 @@
 import React from 'react';
 import 'reset.css';
 import styled from 'styled-components';
-import { setFilter } from 'store/modules/filters';
+import { setFilter } from 'store/modules/filterSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const HeaderTitle = styled.h1`

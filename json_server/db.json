@@ -1,0 +1,25 @@
+{
+  "letters": [
+    {
+      "id": "116aa2d8-36f4-4885-9e89-601120368ced",
+      "nickname": "joloiopiop",
+      "content": "00000000000==========",
+      "status": "혜인",
+      "formattedTime": "24. 02. 20. 오후 08:35:18"
+    },
+    {
+      "id": "8f89080a-a623-40b0-be50-8348f1016f72",
+      "nickname": "test111222",
+      "content": "fasdfasdfasdf",
+      "status": "다니엘",
+      "formattedTime": "24. 02. 20. 오후 08:42:11"
+    },
+    {
+      "id": "087205ef-46bb-40d5-a3b5-c9935193ea29",
+      "nickname": "test000999",
+      "content": "asdfsfsfsdfsdfsdfsdfs",
+      "status": "민지",
+      "formattedTime": "24. 02. 21. 오전 10:36:10"
+    }
+  ]
+}

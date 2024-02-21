@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import 'reset.css';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateLetter } from 'store/modules/letters';
+import { updateLetter } from 'store/modules/letterSlice';
 
 const LetterList = styled.div`
   background-color: #8dd2ef;

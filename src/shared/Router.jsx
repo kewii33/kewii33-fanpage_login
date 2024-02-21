@@ -1,3 +1,37 @@
+// import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+// import Home from 'pages/Home';
+// import LetterDetail from 'pages/LetterDetail';
+// import Login from 'pages/Login';
+// import Profile from 'pages/Profile';
+// import { useSelector } from 'react-redux';
+
+// function Router() {
+//   const isLogin = useSelector((state) => state.authSlice.isLogin);
+//   const access = localStorage.getItem('Token');
+
+//   return (
+//     <BrowserRouter>
+//       <Routes>
+//         {isLogin ? (
+//           <>
+//             <Route path="/home" element={<Home />} />
+//             <Route path="/detail/:letterId" element={<LetterDetail />} />
+//             <Route path="/profile" element={<Profile />} />
+//             <Route path="*" element={<Navigate replace to="/home" />} />
+//           </>
+//         ) : (
+//           <>
+//             <Route path="/" element={<Login />} />
+//             <Route path="*" element={<Navigate replace to="/" />} />
+//           </>
+//         )}
+//       </Routes>
+//     </BrowserRouter>
+//   );
+// }
+
+// export default Router;
+
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from 'pages/Home';
@@ -34,22 +68,5 @@ function Router() {
     </BrowserRouter>
   );
 }
-
-// const Router = () => {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-//         <Route element={<NonAuthLayout />}>
-//           <Route path="/" element={<Login />} />
-//         </Route>
-//         <Route element={<AuthLayout />}>
-//           <Route path="/home" element={<Home />} />
-//           <Route path="/detail/:letterId" element={<LetterDetail />} />
-//           <Route path="/profile" element={<Profile />} />
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// };
 
 export default Router;

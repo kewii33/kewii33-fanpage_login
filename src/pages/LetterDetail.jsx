@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateLetter, deleteLetter } from 'store/modules/letters';
-import { selectUserId } from 'store/modules/login';
+import { updateLetter, deleteLetter } from 'store/modules/letterSlice';
+import { selectUserId } from 'store/modules/authSlice';
 import 'reset.css';
 import Navbar from 'components/Navbar';
 import styled from 'styled-components';
